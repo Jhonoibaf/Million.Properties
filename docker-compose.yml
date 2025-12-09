@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: million_sqlserver
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong@Password1"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: million_app
+    depends_on:
+      - sqlserver
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=Million;User=sa;Password=YourStrong@Password1;TrustServerCertificate=True"
+
+volumes:
+  sqlserver_data:
