@@ -1,5 +1,4 @@
-﻿
-using Million.Properties.Domain.Entities;
+﻿using Million.Properties.Domain.Entities;
 
 namespace Million.Properties.Application.DTOs;
 
@@ -9,8 +8,8 @@ public class PropertyDto
     public string Name { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
     public decimal Price { get; set; }
-    public string InternalCode { get; set; } 
+    public string InternalCode { get; set; } = string.Empty;
     public int Year { get; set; }
-    public string IdOwner { get; set; } = string.Empty;
-    public ICollection<PropertyImage> Images { get; set; } = new List<PropertyImage>();
+    public int? IdOwner { get; set; }
+    public ICollection<PropertyImageDto> Images { get; set; } = new List<PropertyImageDto>();
 }

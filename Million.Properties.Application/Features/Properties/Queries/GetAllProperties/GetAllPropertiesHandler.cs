@@ -17,7 +17,7 @@ public class GetAllPropertiesHandler(
 
     public async Task<IEnumerable<PropertyDto>> Handle(GetAllPropertiesQuery query, CancellationToken cancellationToken)
     {
-        var properties = await _propertyRepository.GetAllAsync(
+        var properties = await _propertyRepository.GetAllWithFiltersAsync(
            query.Request.Name,
            query.Request.Address,
            query.Request.MinPrice,
@@ -33,7 +33,7 @@ public class GetAllPropertiesHandler(
         {
             if (imagesDict.TryGetValue(dto.IdProperty, out var imgs))
             {
-                dto.Images = imgs;
+                dto.Images = _mapper.Map<List<PropertyImageDto>>(imgs);
             }
         }
         return dtos;

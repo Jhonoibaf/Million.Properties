@@ -4,6 +4,7 @@ using Million.Properties.Application.Contracts.Persistence;
 using Million.Properties.Application.Features.Properties.Queries.GetAllProperties;
 using Million.Properties.Application.Mappings;
 using Million.Properties.Domain.Entities;
+using Million.Properties.Domain.Entities.Request.Properties;
 using Moq;
 using NUnit.Framework;
 
@@ -35,11 +36,11 @@ public class GetAllPropertiesHandlerTests
     {
         var props = new List<Property>
         {
-            new() { IdProperty = 1, Name="A", Address="X", Price=1000, CodeInternal=System.Guid.NewGuid().ToString() },
-            new() { IdProperty = 2, Name="B", Address="Y", Price=2000, CodeInternal=System.Guid.NewGuid().ToString() },
+            new() { IdProperty = 1, Name="A", Address="X", Price=1000, CodeInternal=System.Guid.NewGuid().ToString(), Year=2024 },
+            new() { IdProperty = 2, Name="B", Address="Y", Price=2000, CodeInternal=System.Guid.NewGuid().ToString(), Year=2024 },
         };
 
-        _propRepo.Setup(r => r.GetAllAsync(null, null, null, null))
+        _propRepo.Setup(r => r.GetAllWithFiltersAsync(null, null, null, null))
                  .ReturnsAsync(props);
 
         _imgRepo.Setup(r => r.GetAllImagesByPropertyIdsAsync(It.IsAny<IEnumerable<int>>()))
@@ -50,7 +51,7 @@ public class GetAllPropertiesHandlerTests
         });
 
         var handler = new GetAllPropertiesHandler(_propRepo.Object, _imgRepo.Object, _mapper);
-        var result = await handler.Handle(new GetAllPropertiesQuery(new Domain.Entities.Request.GetAllPropertiesRequest()), CancellationToken.None);
+        var result = await handler.Handle(new GetAllPropertiesQuery(new GetAllPropertiesRequest()), CancellationToken.None);
         var resultList = result.ToList();
         Assert.That(resultList, Has.Count.EqualTo(2));
     }

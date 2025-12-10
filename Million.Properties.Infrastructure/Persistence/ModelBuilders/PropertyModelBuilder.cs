@@ -30,10 +30,14 @@ public class PropertyModelBuilder : IEntityTypeConfiguration<Property>
         builder.Property(x => x.Year)
             .IsRequired();
 
+        builder.Property(x => x.IdOwner)
+            .IsRequired(false);
+
         builder.HasOne(p => p.Owner)
             .WithMany(o => o.Properties)
             .HasForeignKey(p => p.IdOwner)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
 
         builder.HasMany(p => p.Images)
             .WithOne(i => i.Property)

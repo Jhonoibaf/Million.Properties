@@ -15,7 +15,7 @@ public static class PresentationServiceRegistration
         services.AddControllers()
             .AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null; // PascalCase
+                options.JsonSerializerOptions.PropertyNamingPolicy = null; 
             });
 
         services.AddEndpointsApiExplorer();

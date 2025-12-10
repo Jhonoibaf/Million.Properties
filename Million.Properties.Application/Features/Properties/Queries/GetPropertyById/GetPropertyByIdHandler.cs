@@ -29,7 +29,7 @@ public class GetPropertyByIdHandler(
             .OrderBy(img => img.IdPropertyImage)
             .ToList();
 
-        dtoProperty.Images = validImages;
+        dtoProperty.Images = _mapper.Map<List<PropertyImageDto>>(validImages);
 
         return dtoProperty;
     }

@@ -71,7 +71,7 @@ public class RepositoryTests
     [Test]
     public async Task Search_WithPriceRange_Works()
     {
-        var list = await _repo.GetAllAsync(null, null, 0m, 1000000m);
+        var list = await _repo.GetAllWithFiltersAsync(null, null, 0m, 1000000m);
         Assert.That(list, Is.Not.Null);
     }
 }

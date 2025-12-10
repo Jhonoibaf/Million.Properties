@@ -1,4 +1,4 @@
-﻿namespace Million.Properties.Domain.Entities.Request;
+﻿namespace Million.Properties.Domain.Entities.Request.Properties;
 
 public class GetAllPropertiesRequest
 {

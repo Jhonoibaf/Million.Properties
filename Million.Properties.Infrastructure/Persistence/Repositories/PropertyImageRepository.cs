@@ -7,12 +7,6 @@ namespace Million.Properties.Infrastructure.Persistence.Repositories;
 public class PropertyImageRepository (PropertiesDbContext context ): GenericRepository<PropertyImage>(context), IPropertyImageRepository
 {
 
-
-    public async Task AddAsync(PropertyImage image)
-    {
-        await context.PropertyImages.AddAsync(image);
-    }
-
     public async Task<Dictionary<int, List<PropertyImage>>> GetAllImagesByPropertyIdsAsync(IEnumerable<int> propertyIds)
     {
         var ids = propertyIds.Distinct().ToList();
@@ -36,5 +30,14 @@ public class PropertyImageRepository (PropertiesDbContext context ): GenericRepo
         return await context.PropertyImages
             .Where(pi => pi.IdProperty == propertyId)
             .ToListAsync();
+    }
+    public async Task UpdateAsync(int id, PropertyImage entity)
+    {
+        var existing = await _context.PropertyImages.FindAsync(id);
+        if (existing != null)
+        {
+            _context.Entry(existing).CurrentValues.SetValues(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

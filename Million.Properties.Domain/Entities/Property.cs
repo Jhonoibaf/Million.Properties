@@ -10,7 +10,7 @@ public class Property: BaseEntityModel
     public decimal Price { get; set; }
     public string CodeInternal { get; set; }
     public int Year { get; set; }
-    public int IdOwner { get; set; } = 0;
+    public int? IdOwner { get; set; }
     public Owner? Owner { get; set; }
     public ICollection<PropertyImage> Images { get; set; } = new List<PropertyImage>();
     public ICollection<PropertyTrace> Traces { get; set; } = new List<PropertyTrace>();

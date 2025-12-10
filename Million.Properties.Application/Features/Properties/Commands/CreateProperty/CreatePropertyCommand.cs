@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Million.Properties.Application.DTOs;
-using Million.Properties.Domain.Entities.Request;
+using Million.Properties.Domain.Entities.Request.Properties;
 
 
 namespace Million.Properties.Application.Features.Properties.Commands.CreateProperty;

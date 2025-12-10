@@ -1,6 +1,8 @@
-﻿namespace Million.Properties.Domain.Entities;
+﻿using Million.Properties.Domain.Common;
 
-public class PropertyImage
+namespace Million.Properties.Domain.Entities;
+
+public class PropertyImage: BaseEntityModel
 {
 
     public int IdPropertyImage { get; set; }

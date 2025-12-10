@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Million.Properties.Application.Contracts.Persistence;
+using Million.Properties.Domain.Common;
 
 namespace Million.Properties.Infrastructure.Persistence.Repositories;
 
-public class GenericRepository<T> where T : class
+public class GenericRepository<T>(PropertiesDbContext context): IGenericRepository<T> where T : BaseEntityModel
 {
-    protected readonly PropertiesDbContext _context;
-    protected readonly DbSet<T> _dbSet;
+    protected readonly PropertiesDbContext _context = context;
+    protected readonly DbSet<T> _dbSet = context.Set<T>();
 
-    public GenericRepository(PropertiesDbContext context)
-    {
-        _context = context;
-        _dbSet = context.Set<T>();
-    }
+    
 
     public async Task<T?> GetByIdAsync(int id)
         => await _dbSet.FindAsync(id);

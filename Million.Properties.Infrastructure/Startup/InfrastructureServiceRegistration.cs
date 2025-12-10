@@ -59,6 +59,8 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IPropertyRepository, PropertyRepository>();
         services.AddScoped<IPropertyImageRepository, PropertyImageRepository>();
         // services.AddScoped<IOwnerRepository, OwnerRepository>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
     #endregion
 

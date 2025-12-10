@@ -6,35 +6,37 @@ using Million.Properties.Domain.Entities;
 
 namespace Million.Properties.Application.Features.Properties.Commands.CreateProperty;
 
-public class CreatePropertyHandler(IPropertyRepository repository, IMapper mapper , IPropertyImageRepository imageRepository)
+public class CreatePropertyHandler(
+    IPropertyRepository repository, 
+    IMapper mapper, 
+    IPropertyImageRepository imageRepository,
+    IUnitOfWork unitOfWork)
     : IRequestHandler<CreatePropertyCommand, CreatePropertyDto>
 {
-    private readonly IPropertyRepository _propertyRepository = repository;
     private readonly IMapper _mapper = mapper;
-    private readonly IPropertyImageRepository _imageRepository = imageRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<CreatePropertyDto> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
     {
-        try
+        if (!request.Request.InternalCode.HasValue || request.Request.InternalCode.Value == Guid.Empty)
         {
-            var entity = _mapper.Map<Property>(request.Request);
-            await repository.AddAsync(entity);
+            request.Request.InternalCode = Guid.NewGuid();
+        }
 
-            if (!string.IsNullOrWhiteSpace(request.Request.File))
+        var entity = _mapper.Map<Property>(request.Request);
+        await _unitOfWork.PropertyRepository.AddAsync(entity);
+
+        if (!string.IsNullOrWhiteSpace(request.Request.File))
+        {
+            var img = new PropertyImage
             {
-                var img = new PropertyImage
-                {
-                    IdProperty = entity.IdProperty,
-                    File = request.Request.File
-                };
-                await imageRepository.AddAsync(img);
-            }
+                IdProperty = entity.IdProperty,
+                File = request.Request.File,
+                Enabled = true
+            };
+            await _unitOfWork.PropertyImageRepository.AddAsync(img);
+        }
 
-            return _mapper.Map<CreatePropertyDto>(entity);
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("An error occurred while creating the property.", ex);
-        }
+        return _mapper.Map<CreatePropertyDto>(entity);
     }
 }

@@ -79,7 +79,7 @@ tests/
 ### 1. Clonar el repositorio
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/Jhonoibaf/Million.Properties
 cd Million.Properties
 ```
 ### 🗄️ 2. Crear la base de datos
@@ -120,7 +120,7 @@ dotnet run
 ```
 ### La API estará disponible en:
 
-- https://localhost:5001/swagger
+- https://localhost:7206/swagger/index.html
 - http://localhost:5000/swagger
 
 
@@ -128,12 +128,12 @@ dotnet run
 
 ### Propiedades
 
-- GET /api/v1/Property
-- GET /api/v1/Property/{id}
-- POST /api/v1/Property
-- PUT /api/v1/Property/{id} 
+- GET /api/v1/Property/GetAllProperty
+- GET /api/v1/Property/GetProperty/{id}
+- POST /api/v1/Property/CreateProperty
+- PUT /api/v1/Property/UpdateProperty
+- PUT /api/v1/Property/UpdatePropertyPriceById/{Id}/{price}
 
 ### Imágenes
 
-- POST /api/v1/PropertyImage
-- GET /api/v1/PropertyImage/{propertyId}
+- POST /api/v1/Images/CreateImage

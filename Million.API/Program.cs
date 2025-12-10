@@ -1,8 +1,9 @@
 using Million.API.Startup;
-using Million.Properties.Application.Mappings;
-using Million.Properties.Infrastructure.Startup;
-using Million.Properties.Infrastructure.Persistence;
+using Million.Properties.API.Middlewares;
 using Million.Properties.Application;
+using Million.Properties.Application.Mappings;
+using Million.Properties.Infrastructure.Persistence;
+using Million.Properties.Infrastructure.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,6 @@ builder.Services.AddMediatR(cfg =>
 });
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,6 +35,7 @@ if (app.Environment.IsDevelopment())
 var corsPolicy = app.Environment.IsDevelopment() ? "OpenCorsPolicy" : "ProductionCorsPolicy";
 app.UseCors(corsPolicy);
 
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 

@@ -1,6 +1,8 @@
-﻿namespace Million.Properties.Domain.Entities;
+﻿using Million.Properties.Domain.Common;
 
-public class PropertyTrace
+namespace Million.Properties.Domain.Entities;
+
+public class PropertyTrace: BaseEntityModel
 {
     public int IdPropertyTrace { get; set; }
     public DateTime DateSale { get; set; }
