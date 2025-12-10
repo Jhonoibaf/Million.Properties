@@ -10,7 +10,7 @@ La capa de infraestructura utiliza **Entity Framework Core con SQL Server** para
 
 La API permite:
 
-- Consultar todas las propiedades con filtros.
+- Consultar todas las propiedades con o sin filtros.
 - Consultar una propiedad por ID.
 - Crear nuevas propiedades.
 - Asociar imágenes a una propiedad.
@@ -25,7 +25,6 @@ La API permite:
 - **Entity Framework Core (SQL Server)**
 - **MediatR** (CQRS)
 - **AutoMapper**
-- **FluentValidation** (si aplica)
 - **Swagger / Swashbuckle**
 
 ### Infraestructura
@@ -41,11 +40,13 @@ La API permite:
 ---
 
 ## 📐 Arquitectura (Clean Architecture)
+
 src/
 ├── Million.Properties.API                 → Capa de Presentación (Controllers, Swagger)
 ├── Million.Properties.Application         → Lógica de negocio (CQRS)
 ├── Million.Properties.Domain              → Entidades del dominio
 ├── Million.Properties.Infrastructure      → Persistencia (EF Core, SQL Server, Repositorios)
+
 
 tests/
 ├── Million.Properties.Application.UnitTest
@@ -54,6 +55,7 @@ tests/
 ### API (Presentation)
 - Configuración de servicios
 - Inyección de dependencias
+- Middlewares
 - Controladores REST
 - Documentación Swagger
 
@@ -84,7 +86,7 @@ cd Million.Properties
 ```
 ### 🗄️ 2. Crear la base de datos
 
-En SQL Server crea una base de datos vacía llamada:
+En SQL Server crea una base de datos vacía:
 ---
 
 ## ⚙️ 3. Configurar la cadena de conexión
@@ -123,6 +125,9 @@ dotnet run
 - https://localhost:7206/swagger/index.html
 - http://localhost:5000/swagger
 
+## APIKEY
+
+- Se debe enviar como X-API-KEY en los headers
 
 ## Endpoints
 
